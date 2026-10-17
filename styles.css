@@ -190,3 +190,29 @@ footer { max-width:1100px;margin:0 auto;padding:8px 16px 22px;display:flex;justi
     gap: 4px;
   }
 }
+/* Smart ID Card Maker: readability fixes */
+.card-details {
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  gap: 5px !important;
+}
+
+.card-details > strong {
+  font-size: 26px !important;
+  font-weight: 900 !important;
+  line-height: 1.15 !important;
+  margin-bottom: 5px !important;
+}
+
+.detail-line {
+  grid-template-columns: minmax(85px, 34%) minmax(0, 1fr) !important;
+  gap: 6px !important;
+}
+
+.card-signature {
+  font-size: 11px !important;
+}
+
+.card-signature strong {
+  font-size: 12px !important;
+}

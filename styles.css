@@ -124,3 +124,69 @@ footer { max-width:1100px;margin:0 auto;padding:8px 16px 22px;display:flex;justi
   .section-heading { flex-direction:column; }
   .section-heading .primary { width:100%; }
 }
+
+/* Smart ID Card Maker: readability and layout fixes */
+.card-details {
+  font-size: clamp(11px, 1.8vw, 16px);
+  gap: 5px;
+  overflow: visible;
+}
+
+.card-details > strong {
+  font-size: clamp(20px, 3.5vw, 30px);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 5px;
+  overflow-wrap: anywhere;
+}
+
+.detail-line {
+  grid-template-columns: minmax(78px, 32%) minmax(0, 1fr);
+  gap: 8px;
+}
+
+.detail-line span,
+.detail-line b {
+  line-height: 1.25;
+}
+
+.card-signature {
+  bottom: 7%;
+  left: auto;
+  right: 4%;
+  width: 23%;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.card-signature span {
+  height: 22px;
+  border-bottom: 2px solid #222;
+  color: transparent;
+}
+
+.card-signature strong {
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.card-bottom {
+  font-size: 8px;
+}
+
+/* Keep the card readable on small screens */
+@media (max-width: 500px) {
+  .card-details {
+    font-size: 10px;
+    gap: 3px;
+  }
+
+  .card-details > strong {
+    font-size: clamp(17px, 4vw, 23px);
+  }
+
+  .detail-line {
+    grid-template-columns: minmax(65px, 34%) minmax(0, 1fr);
+    gap: 4px;
+  }
+}

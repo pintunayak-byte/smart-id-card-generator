@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#173b67">
+  <meta name="description" content="Offline-first student and employee ID card record manager.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Smart ID Card Maker</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark" aria-hidden="true">ID</div>
+    <div class="brand-copy">
+      <h1>Smart ID Card Maker</h1>
+      <p>Offline-first • Your records stay on this device</p>
+    </div>
+    <span id="offlineBadge" class="status-pill">Checking…</span>
+  </header>
+
+  <main class="layout">
+    <nav class="tabs" aria-label="Main navigation">
+      <button class="tab active" data-tab="records">Records</button>
+      <button class="tab" data-tab="institution">Institution</button>
+    </nav>
+
+    <section id="recordsPanel" class="panel">
+      <div class="section-heading">
+        <div>
+          <h2>Student & employee records</h2>
+          <p>Add people and capture or upload their photo.</p>
+        </div>
+        <button id="newRecordBtn" class="primary">+ Add record</button>
+      </div>
+
+      <div class="toolbar">
+        <input id="searchInput" type="search" placeholder="Search name, ID, class or role…" aria-label="Search records">
+        <select id="typeFilter" aria-label="Filter record type">
+          <option value="all">All records</option>
+          <option value="student">Students</option>
+          <option value="employee">Employees</option>
+        </select>
+      </div>
+
+      <div id="emptyState" class="empty-state">
+        <div class="empty-icon">▣</div>
+        <h3>No records yet</h3>
+        <p>Add a student or employee to begin. Your information is saved locally in this browser.</p>
+        <button id="emptyAddBtn" class="primary">Add your first record</button>
+      </div>
+      <div id="recordsList" class="records-list"></div>
+    </section>
+
+    <section id="institutionPanel" class="panel hidden">
+      <div class="section-heading">
+        <div>
+          <h2>Institution settings</h2>
+          <p>These details appear on the ID card preview.</p>
+        </div>
+      </div>
+      <form id="institutionForm" class="form-grid">
+        <label class="span-2">School / company name
+          <input name="name" maxlength="120" placeholder="e.g. Divya Sanskar Vidya Mandir" required>
+        </label>
+        <label class="span-2">Address
+          <input name="address" maxlength="220" placeholder="Institution address">
+        </label>
+        <label>Phone
+          <input name="phone" inputmode="tel" maxlength="30" placeholder="Contact number">
+        </label>
+        <label>Academic session / year
+          <input name="session" maxlength="40" placeholder="2026–27">
+        </label>
+        <label>Primary colour
+          <input name="colour" type="color" value="#173b67">
+        </label>
+        <label>Institution logo
+          <input id="logoInput" type="file" accept="image/*">
+        </label>
+        <div class="logo-row span-2">
+          <img id="logoPreview" class="logo-preview hidden" alt="Institution logo preview">
+          <span id="logoHint" class="muted">No logo selected</span>
+          <button type="button" id="removeLogoBtn" class="quiet">Remove logo</button>
+        </div>
+        <div class="span-2 form-actions">
+          <button type="submit" class="primary">Save institution settings</button>
+          <span id="institutionMessage" class="message" role="status"></span>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <dialog id="recordDialog" class="record-dialog">
+    <form id="recordForm">
+      <div class="dialog-heading">
+        <div>
+          <h2 id="dialogTitle">Add record</h2>
+          <p>Fields marked * are required.</p>
+        </div>
+        <button type="button" id="closeDialogBtn" class="icon-button" aria-label="Close">✕</button>
+      </div>
+      <input type="hidden" name="recordId">
+      <div class="editor-grid">
+        <div class="photo-column">
+          <div class="photo-frame">
+            <img id="photoPreview" alt="Selected portrait" class="hidden">
+            <div id="photoPlaceholder" class="photo-placeholder"><span>PHOTO</span></div>
+          </div>
+          <div class="photo-actions">
+            <button type="button" id="cameraBtn" class="secondary">Take photo</button>
+            <label class="upload-button secondary">Choose photo
+              <input id="photoInput" type="file" accept="image/*" hidden>
+            </label>
+          </div>
+          <button type="button" id="removePhotoBtn" class="quiet full-width">Remove photo</button>
+          <p class="hint">Use JPG, PNG or WebP. Camera access requires permission and a secure connection (HTTPS).</p>
+        </div>
+        <div class="fields-column">
+          <div class="form-grid">
+            <label>Record type *
+              <select name="type" required>
+                <option value="student">Student</option>
+                <option value="employee">Employee</option>
+              </select>
+            </label>
+            <label>Unique ID / Admission No. *
+              <input name="personId" required maxlength="60" placeholder="e.g. ADM-001">
+            </label>
+            <label class="span-2">Full name *
+              <input name="name" required maxlength="120" placeholder="Full name">
+            </label>
+            <label id="classLabel">Class / section
+              <input name="className" maxlength="80" placeholder="e.g. Class 8 - A">
+            </label>
+            <label id="roleLabel">Role / designation
+              <input name="role" maxlength="100" placeholder="e.g. Science Teacher">
+            </label>
+            <label>Phone
+              <input name="phone" inputmode="tel" maxlength="30" placeholder="Optional">
+            </label>
+            <label>Date of birth
+              <input name="dob" type="date">
+            </label>
+            <label class="span-2">Additional details
+              <textarea name="notes" rows="2" maxlength="300" placeholder="Optional notes"></textarea>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="card-preview-wrap">
+        <div class="preview-label">Live ID card preview</div>
+        <article id="cardPreview" class="id-card">
+          <div class="card-top">
+            <img id="cardLogo" class="card-logo hidden" alt="">
+            <div><strong id="cardInstitution">Your Institution</strong><small id="cardAddress"></small></div>
+          </div>
+          <div class="card-body">
+            <div class="card-photo"><img id="cardPersonPhoto" class="hidden" alt=""><span id="cardPhotoFallback">PHOTO</span></div>
+            <div class="card-details">
+              <strong id="cardPersonName">Full Name</strong>
+              <span id="cardPersonId">ID: —</span>
+              <span id="cardPersonClass">Class / role</span>
+              <span id="cardPersonPhone"></span>
+              <small id="cardPersonSession"></small>
+            </div>
+          </div>
+          <div class="card-bottom">IDENTITY CARD</div>
+        </article>
+      </div>
+      <div class="dialog-actions">
+        <button type="button" id="cancelDialogBtn" class="secondary">Cancel</button>
+        <button type="submit" class="primary">Save record</button>
+      </div>
+      <p id="recordMessage" class="message" role="status"></p>
+    </form>
+  </dialog>
+
+  <dialog id="cameraDialog" class="camera-dialog">
+    <div class="dialog-heading">
+      <div><h2>Take photo</h2><p>Position the face in the centre.</p></div>
+      <button type="button" id="closeCameraBtn" class="icon-button" aria-label="Close camera">✕</button>
+    </div>
+    <video id="cameraVideo" autoplay playsinline muted></video>
+    <canvas id="cameraCanvas" class="hidden"></canvas>
+    <p id="cameraMessage" class="message" role="status"></p>
+    <div class="dialog-actions">
+      <button type="button" id="captureBtn" class="primary">Capture</button>
+      <button type="button" id="useCaptureBtn" class="primary hidden">Use photo</button>
+      <button type="button" id="retakeBtn" class="secondary hidden">Retake</button>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <footer><span>Smart ID Card Maker</span><span>Local-first prototype · Stage 1</span></footer>
+  <script src="./app.js" defer></script>
+</body>
+</html>

@@ -161,24 +161,28 @@
         <div class="preview-label">Live ID card preview</div>
         <article id="cardPreview" class="id-card">
           <div class="card-top">
-            <img id="cardLogo" class="card-logo hidden" alt="">
-            <div><strong id="cardInstitution">Your Institution</strong><small id="cardAddress"></small></div>
-          </div>
-          <div class="card-body">
-            <div class="card-photo"><img id="cardPersonPhoto" class="hidden" alt=""><span id="cardPhotoFallback">PHOTO</span></div>
-            <div class="card-details">
-              <strong id="cardPersonName">Full Name</strong>
-              <span id="cardPersonId">ID: —</span>
-              <span id="cardPersonClass">Class / role</span>
-              <span id="cardPersonPhone"></span>
-              <span id="cardPersonDob"></span>
-              <span id="cardPersonMother"></span>
-              <span id="cardPersonFather"></span>
-              <span id="cardPersonValidTill"></span>
-              <small id="cardPersonSession"></small>
+            <img id="cardLogo" class="card-logo hidden" alt="Institution logo">
+            <div class="card-school-copy">
+              <strong id="cardInstitution">आपके विद्यालय का नाम</strong>
+              <small><span id="cardAddress"></span><span id="cardSchoolPhone"></span></small>
             </div>
           </div>
-          <div class="card-bottom">IDENTITY CARD</div>
+          <div class="card-body">
+            <div class="card-photo"><img id="cardPersonPhoto" class="hidden" alt="Student portrait"><span id="cardPhotoFallback">PHOTO</span></div>
+            <div class="card-details">
+              <strong id="cardPersonName">विद्यार्थी का नाम</strong>
+              <div class="detail-line"><span>पिता का नाम</span><b id="cardPersonFather">—</b></div>
+              <div class="detail-line"><span>माता का नाम</span><b id="cardPersonMother">—</b></div>
+              <div class="detail-line"><span>कक्षा</span><b id="cardPersonClass">Class 7</b></div>
+              <div class="detail-line"><span>जन्मतिथि</span><b id="cardPersonDob">—</b></div>
+              <div class="detail-line"><span>मोबाइल नं.</span><b id="cardPersonPhone">—</b></div>
+              <div class="detail-line"><span>पता</span><b id="cardPersonAddress">—</b></div>
+              <div class="detail-line"><span>मान्य तक</span><b id="cardPersonValidTill">—</b></div>
+            </div>
+          </div>
+          <div class="card-footer-art" aria-hidden="true"><span></span><span></span></div>
+          <div class="card-signature"><span>हस्ताक्षर</span><strong>Principal</strong></div>
+          <div class="card-bottom">IDENTITY CARD <small id="cardPersonSession"></small></div>
         </article>
       </div>
       <div class="dialog-actions">

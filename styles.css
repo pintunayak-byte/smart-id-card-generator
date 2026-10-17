@@ -65,18 +65,28 @@ label { display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:65
 .hint { line-height:1.4;margin:9px 0 0; }
 .card-preview-wrap { margin-top:22px;padding:14px;border:1px solid var(--border);border-radius:12px;background:#f8fafc; }
 .preview-label { font-size:11px;text-transform:uppercase;letter-spacing:.7px;font-weight:800;color:var(--muted);margin-bottom:10px; }
-.id-card { --card-brand:var(--brand);width:min(100%,340px);min-height:205px;margin:0 auto;background:white;border:1px solid #d1d9e4;border-radius:10px;overflow:hidden;box-shadow:0 3px 9px #152b4512;color:#152238; }
-.card-top { background:var(--card-brand);color:#fff;min-height:55px;padding:9px 11px;display:flex;align-items:center;gap:8px; }
-.card-top strong { font-size:11px;display:block;line-height:1.25;overflow-wrap:anywhere; }
-.card-top small { font-size:8px;opacity:.85;display:block;margin-top:3px; }
-.card-logo { width:36px;height:36px;object-fit:contain;border:0;border-radius:0;background:transparent;padding:0;flex:0 0 36px; }
-.card-body { display:flex;gap:12px;padding:13px 12px;min-height:112px; }
-.card-photo { width:72px;height:86px;flex:0 0 72px;border:1px solid #d3dae4;background:#eef2f6;display:grid;place-items:center;overflow:hidden;color:#97a4b5;font-size:9px;font-weight:800; }
+.id-card { --card-brand:var(--brand);position:relative;width:min(100%,620px);aspect-ratio:1.58;margin:0 auto;background:#fff;border:1px solid #d8d8d8;border-radius:5px;overflow:hidden;box-shadow:0 3px 9px #152b4512;color:#241d1b;font-family:system-ui,-apple-system,"Noto Sans Devanagari",sans-serif; }
+.card-top { position:relative;z-index:2;min-height:26%;height:26%;padding:8px 14px;display:flex;align-items:center;gap:12px;background:#173b67;color:#fff;border-bottom:4px solid #ed7d22; }
+.card-school-copy { min-width:0;flex:1;text-align:center; }
+.card-top strong { font-size:clamp(14px,2.5vw,25px);display:block;line-height:1.2;overflow-wrap:anywhere;font-weight:900; }
+.card-top small { font-size:clamp(8px,1.25vw,12px);display:block;margin-top:4px;line-height:1.25;color:#fff; }
+.card-logo { width:clamp(36px,8vw,68px);height:clamp(36px,8vw,68px);object-fit:contain;border:0!important;outline:0!important;border-radius:0!important;background:transparent!important;padding:0;box-shadow:none!important;flex:0 0 auto; }
+.card-body { position:relative;z-index:1;display:flex;gap:clamp(10px,2vw,20px);padding:clamp(8px,1.8vw,18px) clamp(10px,2vw,20px) 24px;min-height:60%;height:60%; }
+.card-photo { width:clamp(82px,19%,150px);height:clamp(104px,78%,190px);flex:0 0 19%;border:2px solid #8b5a37;background:#eef2f6;display:grid;place-items:center;overflow:hidden;color:#97a4b5;font-size:10px;font-weight:800; }
 .card-photo img { width:100%;height:100%;object-fit:cover; }
-.card-details { display:flex;flex-direction:column;gap:4px;min-width:0;font-size:9px;overflow-wrap:anywhere; }
-.card-details strong { font-size:12px; }
-.card-details small { margin-top:2px;color:#68788d; }
-.card-bottom { background:#f0f3f8;padding:5px 10px;text-align:center;font-size:8px;letter-spacing:1.4px;font-weight:900;color:#53657b; }
+.card-details { display:flex;flex-direction:column;gap:3px;min-width:0;flex:1;font-size:clamp(9px,1.55vw,14px);line-height:1.25;overflow:hidden; }
+.card-details > strong { font-size:clamp(16px,2.8vw,25px);color:#7d201c;line-height:1.1;margin-bottom:3px; }
+.detail-line { display:grid;grid-template-columns:minmax(85px,34%) minmax(0,1fr);gap:6px;align-items:baseline; }
+.detail-line span { font-weight:800;color:#33241f;white-space:nowrap; }
+.detail-line b { font-weight:800;color:#173b67;overflow-wrap:anywhere; }
+.card-footer-art { position:absolute;left:0;right:0;bottom:0;height:21%;overflow:hidden;z-index:0; }
+.card-footer-art span:first-child { position:absolute;left:-8%;right:-8%;bottom:-68%;height:170%;background:#ed7d22;transform:rotate(-5deg);border-radius:50% 50% 0 0; }
+.card-footer-art span:last-child { position:absolute;left:-10%;right:-10%;bottom:-83%;height:180%;background:#092d83;transform:rotate(3deg);border-radius:50% 50% 0 0;border-top:5px solid #f28a21; }
+.card-signature { position:absolute;z-index:2;bottom:8%;left:37%;width:27%;display:flex;flex-direction:column;align-items:center;color:#222;font-size:clamp(8px,1.2vw,11px); }
+.card-signature span { border-bottom:1px solid #555;width:100%;text-align:center;height:13px;color:#666; }
+.card-signature strong { font-size:clamp(8px,1.2vw,11px); }
+.card-bottom { position:absolute;z-index:2;bottom:1.5%;left:0;right:0;padding:0;text-align:center;font-size:7px;letter-spacing:1.4px;font-weight:900;color:#fff;background:transparent; }
+.card-bottom small { margin-left:8px;letter-spacing:0;font-weight:600; }
 .dialog-actions { display:flex;justify-content:flex-end;gap:9px;margin-top:18px; }
 .message { font-size:12px;color:var(--muted);margin:8px 0 0; }
 .message.error { color:var(--danger); }

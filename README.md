@@ -1,8 +1,8 @@
-# Smart ID Card Maker — Stage 1
+# Smart ID Card Maker — Stage 3
 
 A small, offline-first Progressive Web App (PWA) starter for managing student and employee records, institution details, and profile photos.
 
-## Included in Stage 1
+## Included in Stage 3
 
 - Institution name, address, phone, session, brand colour, and logo.
 - Add/edit/search/delete student and employee records.
@@ -56,3 +56,8 @@ Any static HTTP server can serve these files. Camera APIs may not work when open
 3. Editable card templates, exact card sizes, front/back layouts.
 4. Bulk PDF generation and individual image export.
 5. Backup/restore and optional Google Sheets integration.
+
+
+### Stage 3 card layout update
+- Landscape school ID card styled to follow the user reference: dark-blue school header, logo without a border, portrait on the left, Hindi-labeled student details on the right, orange/blue curved footer, and principal signature area.
+- The address row on the card currently uses the record Additional details field; use it for the student address.

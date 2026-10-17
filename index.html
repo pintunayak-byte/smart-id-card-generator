@@ -142,6 +142,15 @@
             <label>Date of birth
               <input name="dob" type="date">
             </label>
+            <label>Mother's name
+              <input name="motherName" maxlength="120" placeholder="Mother's full name">
+            </label>
+            <label>Father's name
+              <input name="fatherName" maxlength="120" placeholder="Father's full name">
+            </label>
+            <label>Valid till
+              <input name="validTill" type="date">
+            </label>
             <label class="span-2">Additional details
               <textarea name="notes" rows="2" maxlength="300" placeholder="Optional notes"></textarea>
             </label>
@@ -162,6 +171,10 @@
               <span id="cardPersonId">ID: —</span>
               <span id="cardPersonClass">Class / role</span>
               <span id="cardPersonPhone"></span>
+              <span id="cardPersonDob"></span>
+              <span id="cardPersonMother"></span>
+              <span id="cardPersonFather"></span>
+              <span id="cardPersonValidTill"></span>
               <small id="cardPersonSession"></small>
             </div>
           </div>

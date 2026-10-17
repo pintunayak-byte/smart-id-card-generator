@@ -113,6 +113,9 @@ function recordValues() {
     role: String(f.get("role") || "").trim(),
     phone: String(f.get("phone") || "").trim(),
     dob: f.get("dob") || "",
+    motherName: String(f.get("motherName") || "").trim(),
+    fatherName: String(f.get("fatherName") || "").trim(),
+    validTill: f.get("validTill") || "",
     notes: String(f.get("notes") || "").trim(),
     photo: currentRecordPhoto,
     updatedAt: new Date().toISOString()
@@ -125,7 +128,7 @@ function openRecord(record = null) {
   $("dialogTitle").textContent = record ? "Edit record" : "Add record";
   recordForm.elements.recordId.value = record?.id || "";
   recordForm.elements.type.value = record?.type || "student";
-  for (const key of ["personId", "name", "className", "role", "phone", "dob", "notes"]) {
+  for (const key of ["personId", "name", "className", "role", "phone", "dob", "motherName", "fatherName", "validTill", "notes"]) {
     recordForm.elements[key].value = record?.[key] || "";
   }
   updatePhotoPreview();
@@ -137,7 +140,7 @@ function updateTypeLabels() {
   const isStudent = recordForm.elements.type.value === "student";
   $("classLabel").firstChild.textContent = isStudent ? "Class / section" : "Department";
   $("roleLabel").firstChild.textContent = isStudent ? "House / optional role" : "Role / designation";
-  recordForm.elements.className.placeholder = isStudent ? "e.g. Class 8 - A" : "e.g. Science Department";
+  recordForm.elements.className.placeholder = isStudent ? "e.g. 7 or 7 - A" : "e.g. Science Department";
   recordForm.elements.role.placeholder = isStudent ? "Optional" : "e.g. Science Teacher";
 }
 function updatePhotoPreview() {
@@ -151,15 +154,26 @@ function updateCardPreview() {
   const type = recordForm.elements.type.value;
   const name = recordForm.elements.name.value.trim() || "Full Name";
   const id = recordForm.elements.personId.value.trim() || "—";
-  const className = recordForm.elements.className.value.trim();
+  const rawClassName = recordForm.elements.className.value.trim();
+  const className = type === "student" && rawClassName && !/^class\b/i.test(rawClassName)
+    ? `Class ${rawClassName}` : rawClassName;
   const role = recordForm.elements.role.value.trim();
   const phone = recordForm.elements.phone.value.trim();
+  const dob = recordForm.elements.dob.value;
+  const motherName = recordForm.elements.motherName.value.trim();
+  const fatherName = recordForm.elements.fatherName.value.trim();
+  const validTill = recordForm.elements.validTill.value;
+  const displayDate = value => value ? new Date(`${value}T00:00:00`).toLocaleDateString(undefined, { day: "2-digit", month: "2-digit", year: "numeric" }) : "";
   $("cardInstitution").textContent = s.name || "Your Institution";
   $("cardAddress").textContent = s.address || "";
   $("cardPersonName").textContent = name;
   $("cardPersonId").textContent = "ID: " + id;
   $("cardPersonClass").textContent = [className, role].filter(Boolean).join(" • ") || (type === "student" ? "Class / section" : "Department / role");
   $("cardPersonPhone").textContent = phone ? "Phone: " + phone : "";
+  $("cardPersonDob").textContent = dob ? "DOB: " + displayDate(dob) : "";
+  $("cardPersonMother").textContent = motherName ? "Mother: " + motherName : "";
+  $("cardPersonFather").textContent = fatherName ? "Father: " + fatherName : "";
+  $("cardPersonValidTill").textContent = validTill ? "Valid till: " + displayDate(validTill) : "";
   $("cardPersonSession").textContent = s.session || "";
   $("cardLogo").classList.toggle("hidden", !s.logo);
   if (s.logo) $("cardLogo").src = s.logo;
@@ -285,7 +299,7 @@ $("cancelDialogBtn").addEventListener("click", () => recordDialog.close());
 $("searchInput").addEventListener("input", renderRecords);
 $("typeFilter").addEventListener("change", renderRecords);
 recordForm.elements.type.addEventListener("change", () => { updateTypeLabels(); updateCardPreview(); });
-["name","personId","className","role","phone"].forEach(k => recordForm.elements[k].addEventListener("input", updateCardPreview));
+["name","personId","className","role","phone","dob","motherName","fatherName","validTill"].forEach(k => recordForm.elements[k].addEventListener("input", updateCardPreview));
 $("photoInput").addEventListener("change", async e => { if (e.target.files?.[0]) await handlePhotoFile(e.target.files[0]); e.target.value = ""; });
 $("removePhotoBtn").addEventListener("click", () => { currentRecordPhoto = null; updatePhotoPreview(); updateCardPreview(); toast("Photo removed from this draft. Save to confirm."); });
 $("cameraBtn").addEventListener("click", startCamera);
